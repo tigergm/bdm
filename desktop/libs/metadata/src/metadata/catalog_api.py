@@ -20,10 +20,7 @@ import json
 import logging
 import re
 
-try:
-  from collections import OrderedDict
-except ImportError:
-  from ordereddict import OrderedDict # Python 2.6
+from collections import OrderedDict
 
 from django.http import Http404
 from django.utils.html import escape
@@ -35,7 +32,7 @@ from desktop.lib.i18n import force_unicode, smart_str
 
 from metadata.catalog.base import get_api
 from metadata.catalog.navigator_client import CatalogApiException, CatalogEntityDoesNotExistException, CatalogAuthException
-from metadata.conf import has_navigator, NAVIGATOR, has_navigator_file_search
+from metadata.conf import has_catalog, NAVIGATOR, has_catalog_file_search
 
 
 LOG = logging.getLogger(__name__)
@@ -53,10 +50,10 @@ def error_handler(view_fn):
     }
 
     try:
-      if has_navigator(args[0].user):
+      if has_catalog(args[0].user):
         return view_fn(*args, **kwargs)
       else:
-        raise MetadataApiException('Navigator API is not configured.')
+        raise MetadataApiException('Catalog API is not configured.')
     except Http404, e:
       raise e
     except CatalogEntityDoesNotExistException, e:
@@ -94,7 +91,7 @@ def search_entities_interactive(request):
 
   api = get_api(request=request, interface=interface)
 
-  if sources and not has_navigator_file_search(request.user):
+  if sources and not has_catalog_file_search(request.user):
     sources = ['sql']
 
   response = api.search_entities_interactive(
@@ -140,7 +137,7 @@ def search_entities(request):
   limit = int(request.POST.get('limit', 100))
   raw_query = request.POST.get('raw_query', False)
   sources = json.loads(request.POST.get('sources') or '[]')
-  if sources and not has_navigator_file_search(request.user):
+  if sources and not has_catalog_file_search(request.user):
     sources = ['sql']
 
   query_s = query_s.strip() or '*'
@@ -337,16 +334,16 @@ def add_tags(request):
 
   request.audit = {
     'allowed': is_allowed,
-    'operation': 'NAVIGATOR_ADD_TAG',
+    'operation': '%s_ADD_TAG' % interface.upper(),
     'operationText': 'Adding tags %s to entity %s' % (tags, entity_id)
   }
 
   if not is_allowed:
-    raise Exception("The user does not have proper Hue permissions to add Navigator tags.")
+    raise Exception("The user does not have proper Hue permissions to add %s tags." % interface.title())
   if not entity_id:
-    raise Exception("Missing required parameter 'id' for the Hue add_tags API.")
+    raise Exception("Missing required parameter 'id' in add_tags API.")
   if not tags:
-    raise Exception("Missing required parameter 'tags' for the Hue add_tags API.")
+    raise Exception("Missing required parameter 'tags' in add_tags API.")
 
   return JsonResponse(api.add_tags(entity_id, tags))
 
@@ -364,16 +361,16 @@ def delete_tags(request):
 
   request.audit = {
     'allowed': is_allowed,
-    'operation': 'NAVIGATOR_DELETE_TAG',
+    'operation': '%s_DELETE_TAG' % interface.upper(),
     'operationText': 'Removing tags %s to entity %s' % (tags, entity_id)
   }
 
   if not is_allowed:
-    raise Exception("The user does not have proper Hue permissions to delete Navigator tags.")
+    raise Exception("The user does not have proper Hue permissions to delete %s tags." % interface.title())
   if not entity_id:
-    raise Exception("Missing required parameter 'id' for the Hue delete_tags API.")
+    raise Exception("Missing required parameter 'id' in delete_tags API.")
   if not tags:
-    raise Exception("Missing required parameter 'tags' for the Hue delete_tags API.")
+    raise Exception("Missing required parameter 'tags' in delete_tags API.")
 
   return JsonResponse(api.delete_tags(entity_id, tags))
 
@@ -393,18 +390,18 @@ def update_properties(request):
 
   request.audit = {
     'allowed': is_allowed,
-    'operation': 'NAVIGATOR_UPDATE_PROPERTIES',
+    'operation': '%s_UPDATE_PROPERTIES' % interface.upper(),
     'operationText': 'Updating custom metadata %s, deleted custom metadata keys %s and properties %s of entity %s' % (modified_custom_metadata, deleted_custom_metadata_keys, properties, entity_id)
   }
 
   if not entity_id:
     # TODO: raise HueApiException(message="Missing required parameter 'id' for update_properties", source="Hue")
     # source so the user knows which service that failed right away, in UI: "[source] responded with error: [message]"
-    raise Exception("Missing required parameter 'id' for the Hue update_properties API.")
+    raise Exception("Missing required parameter 'id' in update_properties API.")
 
   if not is_allowed:
     # TODO: HueAuthException?
-    raise Exception("The user does not have proper Hue permissions to update Navigator properties.")
+    raise Exception("The user does not have proper Hue permissions to update %s properties." % interface.title())
 
   return JsonResponse(api.update_properties(entity_id, properties, modified_custom_metadata, deleted_custom_metadata_keys))
 
@@ -424,7 +421,7 @@ def delete_metadata_properties(request):
 
   request.audit = {
     'allowed': is_allowed,
-    'operation': 'NAVIGATOR_DELETE_METADATA_PROPERTIES',
+    'operation': '%s_DELETE_METADATA_PROPERTIES' % interface.upper(),
     'operationText': 'Deleting metadata %s of entity %s' % (keys, entity_id)
   }
 
@@ -481,7 +478,7 @@ def create_namespace(request):
 
   request.audit = {
     'allowed': request.user.has_hue_permission(action='write', app='metadata'),
-    'operation': 'NAVIGATOR_CREATE_NAMESPACE',
+    'operation': '%s_CREATE_NAMESPACE' % interface.upper(),
     'operationText': 'Creating namespace %s' % namespace
   }
 

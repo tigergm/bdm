@@ -18,7 +18,7 @@
 from django.utils.translation import ugettext as _
 
 from filebrowser.conf import SHOW_UPLOAD_BUTTON
-from metadata.conf import has_navigator, OPTIMIZER
+from metadata.conf import has_catalog, OPTIMIZER
 from metastore.conf import ENABLE_NEW_CREATE_TABLE
 from notebook.conf import ENABLE_QUERY_BUILDER, ENABLE_QUERY_SCHEDULING, get_ordered_interpreters
 
@@ -2371,7 +2371,7 @@ from desktop.views import _ko
           return self.loadDeferred.promise();
         }
         self.loading(true);
-        window.apiHelper.simpleGet(IMPALA_DOC_INDEX[self.ref]).done(function (doc) {
+        window.apiHelper.simpleGet(window.IMPALA_DOC_INDEX[self.ref]).done(function (doc) {
           self.body(doc.body);
         }).always(function () {
           self.loading(false);
@@ -2384,7 +2384,7 @@ from desktop.views import _ko
         var self = this;
         self.disposals = [];
         self.topics = [];
-        IMPALA_DOC_TOP_LEVEL.forEach(function (topLevelItem) {
+        window.IMPALA_DOC_TOP_LEVEL.forEach(function (topLevelItem) {
           self.topics.push(new LanguageReferenceTopic(topLevelItem));
         });
 

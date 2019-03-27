@@ -32,7 +32,6 @@
   from webpack_loader.templatetags.webpack_loader import render_bundle
 %>
 
-<%namespace name="koComponents" file="/ko_components.mako" />
 <%namespace name="assist" file="/assist.mako" />
 <%namespace name="hueIcons" file="/hue_icons.mako" />
 <%namespace name="commonHeaderFooterComponents" file="/common_header_footer_components.mako" />
@@ -92,6 +91,14 @@
 % endif
   <link rel="stylesheet" href="${ static('desktop/ext/chosen/chosen.min.css') }">
   <link rel="stylesheet" href="${ static('desktop/ext/select2/select2.css') }">
+
+  <link rel="stylesheet" href="${ static('desktop/ext/css/hue-charts.css') }">
+  <link rel="stylesheet" href="${ static('desktop/ext/css/leaflet.css') }">
+  <link rel="stylesheet" href="${ static('desktop/ext/css/leaflet.markercluster.css') }">
+  <link rel="stylesheet" href="${ static('desktop/ext/css/leaflet.zoombox.css') }">
+  <link rel="stylesheet" href="${ static('desktop/ext/css/nv.d3.min.css') }">
+  <link rel="stylesheet" href="${ static('desktop/css/nv.d3.css') }">
+
   <script type="text/javascript">
 % if IS_EMBEDDED.get():
   // Bootstrap 2.3.2 relies on the hide css class presence for modals but doesn't remove it when opened for fade type
@@ -481,18 +488,14 @@ ${ render_bundle('hue') | n,unicode }
   var shareViewModel = initSharing("#documentShareModal");
 </script>
 
-<%namespace name="charting" file="/charting.mako" />
 <%namespace name="configKoComponents" file="/config_ko_components.mako" />
 <%namespace name="notebookKoComponents" file="/common_notebook_ko_components.mako" />
 <%namespace name="hueAceAutocompleter" file="/hue_ace_autocompleter.mako" />
 
-${ charting.import_charts() }
 ${ configKoComponents.config() }
 ${ notebookKoComponents.aceKeyboardShortcuts() }
 ${ notebookKoComponents.downloadSnippetResults() }
 ${ hueAceAutocompleter.hueAceAutocompleter() }
-
-${ koComponents.all() }
 
 ${ commonHeaderFooterComponents.header_pollers(user, is_s3_enabled, apps) }
 

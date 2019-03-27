@@ -24,6 +24,16 @@ import 'knockout.validation';
 import 'ext/ko.editable.custom';
 import 'ext/ko.selectize.custom';
 
+// import 'ko/bindings/charts/plotly/ko.plotly'; // The Plotly chart replacement
+import 'ko/bindings/charts/mapchart/ko.mapChart';
+import 'ko/bindings/charts/ko.barChart';
+import 'ko/bindings/charts/ko.leafletMapChart';
+import 'ko/bindings/charts/ko.lineChart';
+import 'ko/bindings/charts/ko.partitionChart';
+import 'ko/bindings/charts/ko.pieChart';
+import 'ko/bindings/charts/ko.scatterChart';
+import 'ko/bindings/charts/ko.timelineChart';
+
 import 'ko/bindings/ko.aceEditor';
 import 'ko/bindings/ko.aceResizer';
 import 'ko/bindings/ko.appAwareTemplateContextMenu';
@@ -86,7 +96,6 @@ import 'ko/bindings/ko.numericTextInput';
 import 'ko/bindings/ko.onClickOutside';
 import 'ko/bindings/ko.oneClickSelect';
 import 'ko/bindings/ko.parseArguments';
-import 'ko/bindings/ko.plotly';
 import 'ko/bindings/ko.publish';
 import 'ko/bindings/ko.readOnlyAce';
 import 'ko/bindings/ko.resizable';
@@ -115,6 +124,30 @@ import 'ko/bindings/ko.typeahead';
 import 'ko/bindings/ko.verticalSlide';
 import 'ko/bindings/ko.visibleOnHover';
 
+import 'ko/components/contextPopover/ko.contextPopover';
+import 'ko/components/simpleAceEditor/ko.simpleAceEditor';
+import 'ko/components/ko.appSwitcher';
+import 'ko/components/ko.catalogEntriesList';
+import 'ko/components/ko.contextSelector';
+import 'ko/components/ko.createDirectoryModal';
+import 'ko/components/ko.deleteDocModal';
+import 'ko/components/ko.dropDown';
+import 'ko/components/ko.dwSidebar';
+import 'ko/components/ko.executionAnalysis';
+import 'ko/components/ko.favoriteApp';
+import 'ko/components/ko.fieldSamples';
+import 'ko/components/ko.globalSearch';
+import 'ko/components/ko.historyPanel';
+import 'ko/components/ko.inlineAutocomplete';
+import 'ko/components/ko.jobBrowserLinks';
+import 'ko/components/ko.multiClusterSidebar';
+import 'ko/components/ko.navProperties';
+import 'ko/components/ko.navTags';
+import 'ko/components/ko.performanceGraph';
+import 'ko/components/ko.pollingCatalogEntriesList';
+import 'ko/components/ko.sentryPrivileges';
+import 'ko/components/ko.sqlColumnsTable';
+
 import 'ko/extenders/ko.maxLength';
 import 'ko/extenders/ko.numeric';
 import 'ko/extenders/ko.toJson';
@@ -124,3 +157,5 @@ import 'ko/observables/ko.observableDefault';
 
 window.ko = ko;
 window.ko.mapping = komapping;
+
+export default ko;

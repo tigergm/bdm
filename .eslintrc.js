@@ -1,7 +1,6 @@
 
-const normalGlobals = [
-  'ko', 'jQuery', '$', '_', 'Promise'
-];
+const normalGlobals = [];
+
 const hueGlobals = [
   // global_js_constants.mako
   'AUTOCOMPLETE_TIMEOUT', 'CACHEABLE_TTL', 'CSRF_TOKEN', 'DOCUMENT_TYPES', 'DROPZONE_HOME_DIR',
@@ -11,12 +10,11 @@ const hueGlobals = [
   'USER_HOME_DIR', 'WorkerGlobalScope',
 
   // other misc
-  'ace', 'Autocompleter', 'CodeMirror', 'd3v3', 'impalaDagre', 'less', 'MediumEditor', 'moment', 'Plotly', 'Role',
-  'sqlStatementsParser', 'trackOnGA',
+  'ace', 'CodeMirror', 'impalaDagre', 'less', 'MediumEditor', 'moment', 'Role', 'trackOnGA',
 
   // jasmine
-  'afterAll', 'afterEach', 'beforeAll', 'beforeEach', 'describe', 'expect', 'fail', 'fit', 'it', 'jasmine', 'spyOn',
-  'xdescribe', 'xit'
+  'afterAll', 'afterEach', 'beforeAll', 'beforeEach', 'describe', 'expect', 'fail', 'fdescribe', 'fit', 'it', 'jasmine',
+  'spyOn', 'xdescribe', 'xit'
 ];
 
 const globals = normalGlobals.concat(hueGlobals).reduce((acc, key) => {

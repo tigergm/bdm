@@ -19,43 +19,7 @@ const globalVars = {
   CACHEABLE_TTL: 1,
   HAS_OPTIMIZER: false,
   AUTOCOMPLETE_TIMEOUT: 1,
-  HUE_I18n: {
-    autocomplete: {
-      category: {
-        all: 'all',
-        column: 'columns',
-        cte: 'cte',
-        database: 'database',
-        field: 'field',
-        function: 'function',
-        identifier: 'identifier',
-        keyword: 'keyword',
-        popular: 'popular',
-        sample: 'sample',
-        table: 'table',
-        udf: 'udf',
-        option: 'option',
-        variable: 'variable'
-      },
-      meta: {
-        aggregateFunction: 'aggregateFunction',
-        alias: 'alias',
-        commonTableExpression: 'commonTableExpression',
-        database: 'database',
-        filter: 'filter',
-        groupBy: 'groupBy',
-        join: 'join',
-        joinCondition: 'joinCondition',
-        keyword: 'keyword',
-        orderBy: 'orderBy',
-        table: 'table',
-        sample: 'sample',
-        variable: 'variable',
-        view: 'view',
-        virtual: 'virtual'
-      }
-    }
-  }
+  HUE_I18n: {}
 };
 
 Object.keys(globalVars).forEach(key => {

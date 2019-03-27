@@ -14,35 +14,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'jquery/jquery.common';
+import _ from 'lodash';
+import $ from 'jquery/jquery.common';
 import 'ext/bootstrap.2.3.2.min';
 import 'ext/bootstrap-editable.1.5.1.min';
-import _ from 'lodash';
+
+import 'utils/d3Extensions';
+import * as d3 from 'd3';
+import d3v3 from 'd3v3';
 import Dropzone from 'dropzone';
 import filesize from 'filesize';
-import qq from 'ext/fileuploader.custom';
-import page from 'page';
 import localforage from 'localforage';
+import nv from 'nvd3/nv.all';
+import page from 'page';
+import qq from 'ext/fileuploader.custom';
 import sprintf from 'sprintf-js';
 
-import 'ko/ko.all';
+import ko from 'ko/ko.all';
 
 import 'utils/customIntervals';
 import 'utils/json.bigDataParse';
 import apiHelper from 'api/apiHelper';
 import CancellablePromise from 'api/cancellablePromise';
+import { DOCUMENT_TYPE_I18n, DOCUMENT_TYPES } from 'doc/docSupport';
 import contextCatalog from 'catalog/contextCatalog';
 import dataCatalog from 'catalog/dataCatalog';
 import hueAnalytics from 'utils/hueAnalytics';
 import HueColors from 'utils/hueColors';
 import hueDebug from 'utils/hueDebug';
 import hueDrop from 'utils/hueDrop';
+import HueGeo from 'utils/hueGeo';
 import huePubSub from 'utils/huePubSub';
 import hueUtils from 'utils/hueUtils';
+import I18n from 'utils/i18n';
 import MultiLineEllipsisHandler from 'utils/multiLineEllipsisHandler';
 
-import AceLocationHandler from 'sql/aceLocationHandler';
-import SqlParseSupport from 'parse/sqlParseSupport';
 import sqlUtils from 'sql/sqlUtils';
 import { PigFunctions, SqlSetOptions, SqlFunctions } from 'sql/sqlFunctions';
 import sqlWorkerHandler from 'sql/sqlWorkerHandler';
@@ -55,44 +61,43 @@ import TopNavViewModel from 'topNavViewModel';
 
 // TODO: Remove from global scope
 import EditorViewModel from 'apps/notebook/editorViewModel'; // In history, indexer, importer, editor etc.
-import globalSearchParser from 'parse/globalSearchParser'; // ko inline autocomp
 import HdfsAutocompleter from 'utils/hdfsAutocompleter';
-import solrFormulaParser from 'parse/solrFormulaParser'; // simple ace editor
-import solrQueryParser from 'parse/solrQueryParser'; // simple ace editor
 import SqlAutocompleter from 'sql/sqlAutocompleter';
 import sqlAutocompleteParser from 'parse/sqlAutocompleteParser'; // Notebook and used throughout via hue-simple-ace-editor ko component
 import sqlStatementsParser from 'parse/sqlStatementsParser'; // In search.ko and notebook.ko
 
 // TODO: Migrate away
 window._ = _;
-window.AceLocationHandler = AceLocationHandler;
 window.apiHelper = apiHelper;
 window.CancellablePromise = CancellablePromise;
 window.contextCatalog = contextCatalog;
+window.d3 = d3;
+window.d3v3 = d3v3;
 window.dataCatalog = dataCatalog;
+window.DOCUMENT_TYPE_I18n = DOCUMENT_TYPE_I18n;
+window.DOCUMENT_TYPES = DOCUMENT_TYPES;
 window.Dropzone = Dropzone;
 window.EditorViewModel = EditorViewModel;
 window.filesize = filesize;
-window.globalSearchParser = globalSearchParser;
 window.HdfsAutocompleter = HdfsAutocompleter;
 window.hueAnalytics = hueAnalytics;
 window.HueColors = HueColors;
 window.hueDebug = hueDebug;
 window.hueDrop = hueDrop;
+window.HueGeo = HueGeo;
 window.huePubSub = huePubSub;
 window.hueUtils = hueUtils;
+window.I18n = I18n;
 window.localforage = localforage;
 window.MultiLineEllipsisHandler = MultiLineEllipsisHandler;
+window.nv = nv;
 window.page = page;
 window.PigFunctions = PigFunctions;
 window.qq = qq;
-window.solrFormulaParser = solrFormulaParser;
-window.solrQueryParser = solrQueryParser;
 window.sprintf = sprintf;
-window.SqlAutocompleter = SqlAutocompleter;
 window.sqlAutocompleteParser = sqlAutocompleteParser;
+window.SqlAutocompleter = SqlAutocompleter;
 window.SqlFunctions = SqlFunctions;
-window.SqlParseSupport = SqlParseSupport;
 window.SqlSetOptions = SqlSetOptions;
 window.sqlStatementsParser = sqlStatementsParser;
 window.sqlUtils = sqlUtils;

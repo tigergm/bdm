@@ -14,10 +14,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import $ from 'jquery';
+import _ from 'lodash';
+import ko from 'knockout';
+import page from 'page';
+
 import hueUtils from 'utils/hueUtils';
 import huePubSub from 'utils/huePubSub';
-import page from 'page';
-import _ from 'lodash';
+import I18n from 'utils/i18n';
 
 class OnePageViewModel {
   constructor() {
@@ -33,7 +37,11 @@ class OnePageViewModel {
     self.getActiveAppViewModel = function(callback) {
       const checkInterval = window.setInterval(() => {
         const $koElement = $('#' + self.currentApp() + 'Components');
-        if ($koElement.length > 0 && ko.dataFor($koElement[0])) {
+        if (
+          $koElement.length > 0 &&
+          ko.dataFor($koElement[0]) &&
+          !(ko.dataFor($koElement[0]) instanceof OnePageViewModel)
+        ) {
           window.clearInterval(checkInterval);
           callback(ko.dataFor($koElement[0]));
         }
@@ -153,16 +161,6 @@ class OnePageViewModel {
     });
 
     const loadScript = function(scriptUrl) {
-      if (scriptUrl.indexOf('-bundle') !== -1) {
-        const s = document.createElement('script');
-        s.src = scriptUrl;
-        s.type = 'text/javascript';
-        s.async = false;
-        document.getElementsByTagName('head')[0].appendChild(s);
-        return $.Deferred()
-          .resolve({ url: scriptUrl, head: true })
-          .promise();
-      }
       const deferred = $.Deferred();
       $.ajax({
         url: scriptUrl,
@@ -395,7 +393,11 @@ class OnePageViewModel {
             } else if (app !== '500') {
               self.loadApp('500');
             } else {
-              $.jHueNotify.error(window.HUE_I18n.general.offlineOrError);
+              $.jHueNotify.error(
+                I18n(
+                  'It looks like you are offline or an unknown error happened. Please refresh the page.'
+                )
+              );
             }
           }
         });

@@ -31,11 +31,9 @@ if USE_NEW_EDITOR.get():
   home_url = url('desktop_views_home2')
 %>
 
-<%namespace name="charting" file="/charting.mako" />
 <%namespace name="commonHeaderFooterComponents" file="/common_header_footer_components.mako" />
 <%namespace name="hueAceAutocompleter" file="/hue_ace_autocompleter.mako" />
 <%namespace name="hueIcons" file="/hue_icons.mako" />
-<%namespace name="koComponents" file="/ko_components.mako" />
 
 <!DOCTYPE html>
 <%def name="is_selected(selected)">
@@ -140,8 +138,6 @@ if USE_NEW_EDITOR.get():
     ${ render_bundle('hue') | n,unicode }
   % endif
 
-  <script src="${ static('desktop/ext/js/d3.v3.js') }"></script>
-  <script src="${ static('desktop/ext/js/d3.v4.js') }"></script>
   <script src="${ static('desktop/js/bootstrap-tooltip.js') }"></script>
   <script src="${ static('desktop/js/bootstrap-typeahead-touchscreen.js') }"></script>
   <script src="${ static('desktop/ext/js/bootstrap-better-typeahead.min.js') }"></script>
@@ -164,8 +160,6 @@ if USE_NEW_EDITOR.get():
 
   <script src="${ static('metastore/js/metastore.model.js') }"></script>
 
-  ${ charting.import_charts() }
-  ${ koComponents.all() }
   ${ hueAceAutocompleter.hueAceAutocompleter() }
 %endif
 

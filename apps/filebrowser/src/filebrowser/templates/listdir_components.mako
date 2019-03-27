@@ -1521,20 +1521,20 @@ from filebrowser.conf import ENABLE_EXTRACT_UPLOADED_ARCHIVE
 
           $("#chownForm").attr("action", "/filebrowser/chown?next=${url('filebrowser.views.view', path='')}" + self.currentPath());
 
-          $("select[name=user]").val(self.selectedFile().stats.user);
+          $("select[name='user']").val(self.selectedFile().stats.user);
 
           $("#chownForm input[name='group_other']").removeClass("fieldError");
           $("#chownForm input[name='user_other']").removeClass("fieldError");
           $("#chownRequired").hide();
 
-          if ($("select[name=group] option:contains('" + self.selectedFile().stats.group + "')").length > 0) {
-            $("select[name=group]").val(self.selectedFile().stats.group);
+          if ($("select[name='group'] option:contains('" + self.selectedFile().stats.group + "')").length > 0) {
+            $("select[name='group']").val(self.selectedFile().stats.group);
           } else {
-            $("select[name=group]").val("__other__");
-            $("input[name=group_other]").val(self.selectedFile().stats.group);
+            $("select[name='group']").val("__other__");
+            $("input[name='group_other']").val(self.selectedFile().stats.group);
           }
 
-          $("select[name=group]").change();
+          $("select[name='group']").change();
 
           $("#changeOwnerModal").modal({
             keyboard: true,
@@ -1599,9 +1599,9 @@ from filebrowser.conf import ENABLE_EXTRACT_UPLOADED_ARCHIVE
 
           for (var i = 0; i < permissions.length; i++) {
             if (mode & 1) {
-              $("#chmodForm input[name=" + permissions[i] + "]").attr("checked", true);
+              $("#chmodForm input[name='" + permissions[i] + "']").attr("checked", true);
             } else {
-              $("#chmodForm input[name=" + permissions[i] + "]").attr("checked", false);
+              $("#chmodForm input[name='" + permissions[i] + "']").attr("checked", false);
             }
             mode >>>= 1;
           }
@@ -2083,7 +2083,7 @@ from filebrowser.conf import ENABLE_EXTRACT_UPLOADED_ARCHIVE
                 '<span class="break-word" data-dz-name></span>' +
                 '<div class="pull-right">' +
                 '<span class="muted" data-dz-size></span>&nbsp;&nbsp;' +
-                '<span data-dz-remove><a href="javascript:undefined;" title="' + HUE_I18n.dropzone.cancelUpload + '"><i class="fa fa-fw fa-times"></i></a></span>' +
+                '<span data-dz-remove><a href="javascript:undefined;" title="' + I18n('Cancel upload') + '"><i class="fa fa-fw fa-times"></i></a></span>' +
                 '<span style="display: none" data-dz-uploaded><i class="fa fa-fw fa-check muted"></i></span>' +
                 '</div>' +
                 '<div class="progress-row-bar" data-dz-uploadprogress></div>' +
@@ -2122,7 +2122,7 @@ from filebrowser.conf import ENABLE_EXTRACT_UPLOADED_ARCHIVE
               $('#progressStatusBar div').width(progress.toFixed() + "%");
             },
             canceled: function () {
-              $.jHueNotify.info(HUE_I18n.dropzone.uploadCanceled);
+              $.jHueNotify.info(I18n('The upload has been canceled'));
             },
             complete: function (data) {
               if (data.xhr.response != '') {
@@ -2131,7 +2131,7 @@ from filebrowser.conf import ENABLE_EXTRACT_UPLOADED_ARCHIVE
                   if (response.status != 0) {
                     $(document).trigger('error', response.data);
                   } else {
-                    $(document).trigger('info', response.path + ' ' + HUE_I18n.dropzone.uploadSucceeded);
+                    $(document).trigger('info', response.path + ' ' + I18n('uploaded successfully'));
                     viewModel.filesToHighlight.push(response.path);
                   }
                 }
